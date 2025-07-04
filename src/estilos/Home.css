@@ -1,0 +1,57 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: none;
+}
+
+/* Background da tela */
+.home {
+  background-color: #f5f5f5;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/* Estilo do título */
+.home h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.banner {
+  height: 100%;
+  width: 100%;
+  background-color: #343434;
+}
+
+.lista-pratos {
+  display: flex;
+  flex-wrap: wrap; /* Permite que os itens quebrem linha se necessário */
+  gap: 16px; /* Espaçamento entre os itens */
+  justify-content: center; /* Centraliza os itens no contêiner */
+} 
+
+.button-add {
+  display: flex;
+  padding: 10px 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  cursor: pointer;
+  width: 10rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-add a {
+  color: white;
+  text-decoration: none;
+}
