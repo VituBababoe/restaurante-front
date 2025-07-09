@@ -1,75 +1,80 @@
 import React, { useEffect, useState } from "react";
 import "../estilos/FormularioCardapio.css"; // Importando o CSS específico para o componente
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../services/api";
 
 interface FormularioProps {
   id: number;
   nome: string;
   cozinha: string;
-  descricaoResumida: string;
-  descricaoDetalhada: string;
+  descricao_resumida: string;
+  descricao_detalhada: string;
   imagem: string;
   valor: number;
 }
 
-const FormularioCardapio: React.FC = () => {
+const FormularioEditar: React.FC = () => {
   const [prato, setPrato] = useState<FormularioProps>({
     id: 0,
     nome: "",
     cozinha: "",
-    descricaoResumida: "",
-    descricaoDetalhada: "",
+    descricao_resumida: "",
+    descricao_detalhada: "",
     imagem: "",
     valor: 0,
   });
 
-  const {id} = useParams()
+  const {id} = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    async function requestData() {
-      if (id) {
-        const response = await api.post(`/pratos/${id}`);
-        setPrato(response.data);
+  useEffect(
+    () => {
+      async function requestData() {
+        const request = await api.get(`/pratos/${id}`)
+        const data = request.data
+        setPrato(data)
       }
-    }
 
-    requestData();
-  }, [id]);
+      if(id){
+        requestData()
+      }
+    }, [id]
+  )
+
 
   const handleChange = () => (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+    console.log(name)
+    console.log(value)
     setPrato((prevPrato) => ({
       ...prevPrato,
       [name]: value,
     }));
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault(); // Evita o comportamento padrão do formulário
-
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     try {
-      // Envia os dados do prato para a API
-      await api.post("/pratos", prato);
-      alert("Prato cadastrado com sucesso!");
-      navigate("/");
+      const response = await api.put(`/pratos/${id}`, prato);
+      navigate(`/`);
+      alert("Prato editado com sucesso!");
     } catch (error) {
-      alert("Erro ao cadastrar o prato. Tente novamente.");
+      alert("Erro ao editar o prato. Por favor, tente novamente.");
     }
   };
 
   return (
     <>
       <div className="form-container">
-        <h1>Cadastro de Pratos</h1>
-        <p>Bem-vindo ao sistema de cadastro de pratos!</p>
-        <input type="text" 
-        name="nome" 
-        placeholder="Digite o nome do prato"
-        value={prato.nome}
-        onChange={handleChange()}
-         />
+        <h1>Editor de Pratos</h1>
+        <p>Bem-vindo ao sistema de edição de pratos!</p>
+        <input
+          type="text"
+          name="nome"
+          placeholder="Digite o nome do prato" 
+          value={prato.nome}
+          onChange={handleChange()}
+          />
         <input
           type="text"
           name="cozinha"
@@ -79,16 +84,16 @@ const FormularioCardapio: React.FC = () => {
         />
         <input
           type="text"
-          name="descricaoResumida"
+          name="descricao_resumida"
           placeholder="Digite a descrição resumida do prato"
-          value={prato.descricaoResumida}
+          value={prato.descricao_resumida}
           onChange={handleChange()}
         />
         <input
           type="text"
-          name="descricaoDetalhada"
+          name="descricao_detalhada"
           placeholder="Digite a descrição detalhada do prato"
-          value={prato.descricaoDetalhada}
+          value={prato.descricao_detalhada}
           onChange={handleChange()}
         />
         <input
@@ -106,12 +111,12 @@ const FormularioCardapio: React.FC = () => {
         onChange={handleChange()}
         />
         <button 
-        type="submit"
-        onClick={handleSubmit}
-        >Cadastrar Prato</button>
+        type="button"
+        onClick={() => handleSubmit(new Event('submit') as unknown as React.FormEvent<HTMLFormElement>)}
+        >Editar Prato</button>
       </div>
     </>
   );
 };
 
-export default FormularioCardapio;
+export default FormularioEditar;

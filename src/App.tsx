@@ -6,6 +6,7 @@ import "./estilos/DetalhesPratos.css";
 import Home from "./componentes/Home";
 import DetalhesPrato from "./componentes/DetalhesPratos";
 import FormularioCardapio from "./componentes/FormularioCardapio";
+import FormularioEditar from "./componentes/FormuladoEditar";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/detalhes/:id" element={<DetalhesPrato />} />
         <Route path="/cadastro-prato" element={<FormularioCardapio />} /> 
+        <Route path="/editar-prato/:id" element={<FormularioEditar />} />
       </Routes>
     </Router>
   );

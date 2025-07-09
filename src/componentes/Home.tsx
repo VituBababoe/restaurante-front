@@ -45,7 +45,9 @@ function Home() {
         id={prato.id}
         nome={prato.nome}
         cozinha={prato.cozinha}
-        descricao_resumida={prato.descricao_resumida}/>
+        descricao_resumida={prato.descricao_resumida}
+        valor={prato.valor}
+        />
       ))}
       </div>
     </div>
